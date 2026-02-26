@@ -1,10 +1,10 @@
-import { useCallback } from 'react'
-import { MessageList, ChatInput } from '@/components/Chat'
+import { ChatInput, MessageList } from '@/components/Chat'
 import { ChatHeader } from '@/components/Chat/ChatHeader'
 import { MockEditor } from '@/components/Editor'
+import { getToolDisplayName, getToolTarget, sendMessage, stopAgent } from '@/services/mock-backend'
 import { useChatStore } from '@/stores/chat-store'
-import { sendMessage, stopAgent, getToolDisplayName, getToolTarget } from '@/services/mock-backend'
 import type { ChatMessage } from '@/types/chat'
+import { useCallback } from 'react'
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -71,7 +71,8 @@ export default function App() {
           }
           addMessage(toolMessage)
 
-          await new Promise((resolve) => setTimeout(resolve, 300))
+          const toolDelay = response.tool === 'run_test' ? 5000 : 300
+          await new Promise((resolve) => setTimeout(resolve, toolDelay))
 
           updateToolStatus(toolCallId, 'completed', response.result)
 
@@ -106,6 +107,7 @@ export default function App() {
 
   const handleInterrupt = useCallback(async () => {
     if (abortController) {
+      await new Promise((resolve) => setTimeout(resolve, 800))
       abortController.abort()
     }
 

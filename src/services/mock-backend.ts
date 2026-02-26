@@ -1,4 +1,4 @@
-import type { ToolName } from '@/types/chat'
+import type { ToolName } from '@/types/chat';
 
 export type AgentResponse =
   | { type: 'text'; content: string }
@@ -10,7 +10,7 @@ export interface RollbackResult {
 }
 
 const ERROR_RATE = 0.05
-const FIRST_MESSAGE_DELAY = 1000
+const USER_MESSAGE_DELAY = 2000
 const MIN_SUBSEQUENT_DELAY = 200
 const MAX_SUBSEQUENT_DELAY = 500
 const ERROR_DELAY = 5000
@@ -95,8 +95,7 @@ export async function* sendMessage(
   let currentIndex = startIndex % HARDCODED_RESPONSES.length
   let lineCount = currentLineCount
 
-  const isFirstResponse = currentIndex === 0 && currentLineCount === 0
-  await sleep(isFirstResponse ? FIRST_MESSAGE_DELAY : MIN_SUBSEQUENT_DELAY, signal)
+  await sleep(USER_MESSAGE_DELAY, signal)
 
   while (currentIndex < HARDCODED_RESPONSES.length) {
     if (shouldError(forceError)) {
@@ -166,13 +165,13 @@ export async function rollbackToMessage(
 export function getToolDisplayName(tool: ToolName): string {
   switch (tool) {
     case 'list_dir':
-      return 'List Directory'
+      return 'list_dir'
     case 'read_file':
-      return 'Read File'
+      return 'read_file'
     case 'edit_file':
-      return 'Edit File'
+      return 'edit_file'
     case 'run_test':
-      return 'Run Test'
+      return 'run_test'
     default:
       return tool
   }

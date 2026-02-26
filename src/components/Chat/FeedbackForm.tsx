@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
 import { useChatStore } from '@/stores/chat-store'
-import { ThumbsDown, ThumbsUp, Send, X } from 'lucide-react'
-import { useState, useCallback } from 'react'
 import type { MessageFeedback } from '@/types/chat'
+import { Send, ThumbsDown, ThumbsUp, X } from 'lucide-react'
+import { useCallback, useState } from 'react'
 
 interface FeedbackFormProps {
   messageId: string
@@ -65,7 +65,7 @@ export function FeedbackForm({ messageId, currentFeedback }: FeedbackFormProps) 
 
   if (showInput) {
     return (
-      <div className="mt-2 p-2 bg-muted/30 rounded-lg">
+      <div className="mt-2 p-2 bg-muted/30 rounded-lg max-w-56">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             {selectedRating === 'positive' ? (

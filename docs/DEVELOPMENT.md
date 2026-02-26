@@ -115,5 +115,4 @@ Key color tokens:
 
 ### Part 3: Implementation (Home Task)
 - Implement the designed rollback/editing feature
-- Address identified UI/UX issues
 - Write clean, maintainable code
