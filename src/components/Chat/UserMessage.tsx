@@ -1,7 +1,7 @@
-import type { UserMessage as UserMessageType } from '@/types/chat'
+import type { UserMessage as UserMessageType } from "@/types/chat";
 
 interface UserMessageProps {
-  message: UserMessageType
+  message: UserMessageType;
 }
 
 export function UserMessage({ message }: UserMessageProps) {
@@ -11,5 +11,5 @@ export function UserMessage({ message }: UserMessageProps) {
         {message.content}
       </span>
     </div>
-  )
+  );
 }

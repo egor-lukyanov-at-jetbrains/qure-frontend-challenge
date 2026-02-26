@@ -8,7 +8,7 @@ This is a mocked AI coding agent sandbox designed for evaluating Design Engineer
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
@@ -31,11 +31,11 @@ The mock backend (`src/services/mock-backend.ts`) simulates agent responses with
 
 ### API Methods
 
-| Method | Description | Success Delay | Error Rate      |
-|--------|-------------|---------------|-----------------|
-| `sendMessage(text, forceError?, signal?)` | Sends a message and streams agent responses | 1s first, 200-500ms subsequent | 5% per response |
-| `stopAgent(signal?)` | Stops the agent | 1s | 5%              |
-| `rollbackToMessage(messageId, messages, signal?)` | Rolls back to a specific message | 5s | 5%              |
+| Method                                            | Description                                 | Success Delay                  | Error Rate      |
+| ------------------------------------------------- | ------------------------------------------- | ------------------------------ | --------------- |
+| `sendMessage(text, forceError?, signal?)`         | Sends a message and streams agent responses | 1s first, 200-500ms subsequent | 5% per response |
+| `stopAgent(signal?)`                              | Stops the agent                             | 1s                             | 5%              |
+| `rollbackToMessage(messageId, messages, signal?)` | Rolls back to a specific message            | 5s                             | 5%              |
 
 ### Response Types
 
@@ -51,33 +51,39 @@ The mock backend (`src/services/mock-backend.ts`) simulates agent responses with
 ## Message Types
 
 ```typescript
-type ChatMessage = 
-  | UserMessage       // User's text message
-  | AgentTextMessage  // Agent's text response
+type ChatMessage =
+  | UserMessage // User's text message
+  | AgentTextMessage // Agent's text response
   | ToolOperationMessage // Tool call (list_dir, read_file, etc.)
-  | ErrorMessage      // Error display
+  | ErrorMessage; // Error display
 ```
 
 ## Key Components
 
 ### MessageList
+
 Renders the chat messages with auto-scroll behavior. Groups consecutive tool operations together.
 
 ### ChatInput
+
 Text input with send/stop buttons. Enter to send, Shift+Enter for newline.
 
 ### ToolOperationMessage
+
 Collapsible tool operation display with shimmer animation for running state.
 
 ### FeedbackForm
+
 Like/dislike buttons with optional text feedback.
 
 ### MockEditor
+
 Simple text display showing the mock file content updated by write_file operations.
 
 ## State Management
 
 The `chat-store.ts` manages:
+
 - `messages`: Array of chat messages
 - `fileContent`: Mock file content (lines array)
 - `isAgentWorking`: Boolean indicating agent activity
@@ -88,6 +94,7 @@ The `chat-store.ts` manages:
 The project uses Tailwind CSS with a custom color palette based on CSS variables (dark theme by default).
 
 Key color tokens:
+
 - `sidebar`: Chat panel background and text
 - `background`: Editor panel background
 - `muted`: Secondary/disabled states
@@ -104,16 +111,18 @@ Key color tokens:
 ## Candidate Evaluation Tasks
 
 ### Part 1: UI/UX Review (Interview)
+
 - Identify UI issues and inconsistencies
 - Suggest UX improvements
 - Review error handling and edge cases
 
 ### Part 2: Feature Design (Interview)
+
 - Design rollback behavior (restore chat + file state)
 - Design message editing flow
 - Consider edge cases and state management
 
 ### Part 3: Implementation (Home Task)
+
 - Implement the designed rollback/editing feature
-- Address identified UI/UX issues
 - Write clean, maintainable code
