@@ -1,17 +1,17 @@
-import { cn } from '@/lib/utils'
-import { Send, Square } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import type { KeyboardEvent } from 'react'
+import { cn } from "@/lib/utils";
+import { Send, Square } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 
-const MIN_LINES = 2
-const MAX_LINES = 8
+const MIN_LINES = 2;
+const MAX_LINES = 8;
 
 interface ChatInputProps {
-  onSubmit: (text: string) => void
-  disabled?: boolean
-  isAgentWorking?: boolean
-  onInterrupt?: () => void
-  placeholder?: string
+  onSubmit: (text: string) => void;
+  disabled?: boolean;
+  isAgentWorking?: boolean;
+  onInterrupt?: () => void;
+  placeholder?: string;
 }
 
 export function ChatInput({
@@ -19,59 +19,59 @@ export function ChatInput({
   disabled = false,
   isAgentWorking = false,
   onInterrupt,
-  placeholder = 'Type a message...',
+  placeholder = "Type a message...",
 }: ChatInputProps) {
-  const [value, setValue] = useState('')
-  const [metrics, setMetrics] = useState({ lineHeight: 20, padding: 8 })
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [value, setValue] = useState("");
+  const [metrics, setMetrics] = useState({ lineHeight: 20, padding: 8 });
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (textareaRef.current) {
-      const computed = window.getComputedStyle(textareaRef.current)
-      const lh = parseFloat(computed.lineHeight) || 20
-      const pt = parseFloat(computed.paddingTop) || 0
-      const pb = parseFloat(computed.paddingBottom) || 0
-      setMetrics({ lineHeight: lh, padding: pt + pb })
+      const computed = window.getComputedStyle(textareaRef.current);
+      const lh = parseFloat(computed.lineHeight) || 20;
+      const pt = parseFloat(computed.paddingTop) || 0;
+      const pb = parseFloat(computed.paddingBottom) || 0;
+      setMetrics({ lineHeight: lh, padding: pt + pb });
     }
-  }, [])
+  }, []);
 
-  const minHeight = MIN_LINES * metrics.lineHeight + metrics.padding
-  const maxHeight = MAX_LINES * metrics.lineHeight + metrics.padding
+  const minHeight = MIN_LINES * metrics.lineHeight + metrics.padding;
+  const maxHeight = MAX_LINES * metrics.lineHeight + metrics.padding;
 
   const handleSubmit = useCallback(() => {
-    const trimmed = value.trim()
-    if (!trimmed || disabled || isAgentWorking) return
+    const trimmed = value.trim();
+    if (!trimmed || disabled || isAgentWorking) return;
 
-    onSubmit(trimmed)
-    setValue('')
+    onSubmit(trimmed);
+    setValue("");
 
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = "auto";
     }
-  }, [value, disabled, isAgentWorking, onSubmit])
+  }, [value, disabled, isAgentWorking, onSubmit]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault()
-        handleSubmit()
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSubmit();
       }
     },
-    [handleSubmit]
-  )
+    [handleSubmit],
+  );
 
   const handleInput = useCallback(() => {
-    const textarea = textareaRef.current
+    const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = 'auto'
-      textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`;
     }
-  }, [maxHeight])
+  }, [maxHeight]);
 
-  const canSend = !disabled && !isAgentWorking && value.trim().length > 0
-  const canInterrupt = isAgentWorking && onInterrupt
+  const canSend = !disabled && !isAgentWorking && value.trim().length > 0;
+  const canInterrupt = isAgentWorking && onInterrupt;
 
-  const effectivePlaceholder = placeholder
+  const effectivePlaceholder = placeholder;
 
   return (
     <div className="mb-3 mx-3 relative">
@@ -86,9 +86,9 @@ export function ChatInput({
           style={{ minHeight }}
           disabled={disabled}
           className={cn(
-            'w-full resize-none bg-transparent px-2 pt-2 pb-2',
-            'text-sm placeholder:text-muted-foreground leading-5 text-foreground',
-            'focus:outline-none'
+            "w-full resize-none bg-transparent px-2 pt-2 pb-2",
+            "text-sm placeholder:text-muted-foreground leading-5 text-foreground",
+            "focus:outline-none",
           )}
         />
         <div className="flex items-center justify-end px-2 pb-2 gap-2">
@@ -96,9 +96,9 @@ export function ChatInput({
             <button
               onClick={onInterrupt}
               className={cn(
-                'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm',
-                'bg-red-500/20 text-red-400 hover:bg-red-500/30',
-                'transition-colors'
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm",
+                "bg-red-500/20 text-red-400 hover:bg-red-500/30",
+                "transition-colors",
               )}
             >
               <Square className="h-3.5 w-3.5 fill-current" />
@@ -113,10 +113,10 @@ export function ChatInput({
               onClick={handleSubmit}
               disabled={!canSend}
               className={cn(
-                'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm',
-                'bg-primary text-primary-foreground',
-                'disabled:opacity-50 disabled:cursor-not-allowed',
-                'transition-colors'
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm",
+                "bg-primary text-primary-foreground",
+                "disabled:opacity-50 disabled:cursor-not-allowed",
+                "transition-colors",
               )}
             >
               <Send className="h-3.5 w-3.5" />
@@ -126,5 +126,5 @@ export function ChatInput({
         </div>
       </div>
     </div>
-  )
+  );
 }

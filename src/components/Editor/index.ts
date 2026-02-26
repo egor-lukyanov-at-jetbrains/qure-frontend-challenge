@@ -1,1 +1,1 @@
-export { MockEditor } from './MockEditor'
+export { MockEditor } from "./MockEditor";

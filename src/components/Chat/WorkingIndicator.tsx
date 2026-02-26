@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 export function WorkingIndicator() {
   return (
@@ -8,17 +8,17 @@ export function WorkingIndicator() {
           <span
             key={i}
             className={cn(
-              'w-1.5 h-1.5 rounded-full bg-muted-foreground/50',
-              'animate-pulse'
+              "w-1.5 h-1.5 rounded-full bg-muted-foreground/50",
+              "animate-pulse",
             )}
             style={{
               animationDelay: `${i * 200}ms`,
-              animationDuration: '1s',
+              animationDuration: "1s",
             }}
           />
         ))}
       </span>
       <span className="ml-1">Agent is working...</span>
     </div>
-  )
+  );
 }

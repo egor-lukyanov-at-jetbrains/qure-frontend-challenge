@@ -1,8 +1,8 @@
-import type { ErrorMessage as ErrorMessageType } from '@/types/chat'
-import { AlertCircle } from 'lucide-react'
+import type { ErrorMessage as ErrorMessageType } from "@/types/chat";
+import { AlertCircle } from "lucide-react";
 
 interface ErrorMessageProps {
-  message: ErrorMessageType
+  message: ErrorMessageType;
 }
 
 /**
@@ -18,10 +18,8 @@ export function ErrorMessage({ message }: ErrorMessageProps) {
       <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-red-500 mb-1">Error</p>
-        <p className="text-sm text-red-400/90 break-words">
-          {message.message}
-        </p>
+        <p className="text-sm text-red-400/90 break-words">{message.message}</p>
       </div>
     </div>
-  )
+  );
 }
